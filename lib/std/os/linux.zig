@@ -2638,8 +2638,6 @@ pub const Sysinfo = switch (builtin.target.abi) {
         freehigh: u64,
         /// Memory unit size in bytes
         mem_unit: u32,
-        /// Pad
-        _f: [20 - 2 * @sizeOf(usize) - @sizeOf(u32)]u8,
     },
     else => extern struct {
         /// Seconds since boot

@@ -2610,6 +2610,39 @@ pub fn map_shadow_stack(addr: u64, size: u64, flags: u32) usize {
     return syscall3(.map_shadow_stack, addr, size, flags);
 }
 
+pub const sysinfo_t = extern struct {
+    /// Seconds since boot
+    uptime: i64,
+    /// 1, 5, and 15 minute load averages
+    loads: [3]u64,
+    /// Total usable main memory size
+    totalram: u64,
+    /// Available memory size
+    freeram: u64,
+    /// Amount of shared memory
+    sharedram: u64,
+    /// Memory used by buffers
+    bufferram: u64,
+    /// Total swap space size
+    totalswap: u64,
+    /// swap space still available
+    freeswap: u64,
+    /// Number of current processes
+    procs: u16,
+    /// Explicit padding for m68k
+    pad: u16,
+    /// Total high memory size
+    totalhigh: u64,
+    /// Available high memory size
+    freehigh: u64,
+    /// Memory unit size in bytes
+    mem_unit: u32,
+};
+
+pub fn sysinfo(info: *sysinfo_t) usize {
+    return syscall1(.sysinfo, @intFromPtr(info));
+}
+
 pub const E = switch (native_arch) {
     .mips, .mipsel, .mips64, .mips64el => enum(u16) {
         /// No error occurred.

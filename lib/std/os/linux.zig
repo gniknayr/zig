@@ -2610,7 +2610,7 @@ pub fn map_shadow_stack(addr: u64, size: u64, flags: u32) usize {
     return syscall3(.map_shadow_stack, addr, size, flags);
 }
 
-pub const sysinfo_t = extern struct {
+pub const Sysinfo = extern struct {
     /// Seconds since boot
     uptime: i64,
     /// 1, 5, and 15 minute load averages
@@ -2639,7 +2639,7 @@ pub const sysinfo_t = extern struct {
     mem_unit: u32,
 };
 
-pub fn sysinfo(info: *sysinfo_t) usize {
+pub fn sysinfo(info: *Sysinfo) usize {
     return syscall1(.sysinfo, @intFromPtr(info));
 }
 

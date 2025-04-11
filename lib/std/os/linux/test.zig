@@ -166,7 +166,7 @@ test "sigset_t" {
 }
 
 test "sysinfo" {
-    var info: linux.sysinfo_t = undefined;
+    var info: linux.Sysinfo = undefined;
     const result: usize = linux.sysinfo(&info);
     try expect(std.os.linux.E.init(result) == .SUCCESS);
     try expectEqual(info.pad, 0);

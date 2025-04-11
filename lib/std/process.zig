@@ -1746,7 +1746,7 @@ pub const TotalSystemMemoryError = error{
 pub fn totalSystemMemory() TotalSystemMemoryError!u64 {
     switch (native_os) {
         .linux => {
-            var info: std.os.linux.sysinfo_t = undefined;
+            var info: std.os.linux.Sysinfo = undefined;
             const result: usize = std.os.linux.sysinfo(&info);
             if (std.os.linux.E.init(result) != .SUCCESS) {
                 return error.UnknownTotalSystemMemory;

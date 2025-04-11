@@ -165,6 +165,13 @@ test "sigset_t" {
     try expectEqual(sigset[2], 0);
 }
 
+test "sysinfo" {
+    var info: linux.sysinfo_t = undefined;
+    const result: usize = linux.sysinfo(&info);
+    try expect(std.os.linux.E.init(result) == .SUCCESS);
+    try expectEqual(info.pad, 0);
+}
+
 test {
     _ = linux.IoUring;
 }

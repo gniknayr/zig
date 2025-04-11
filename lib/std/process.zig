@@ -1746,7 +1746,12 @@ pub const TotalSystemMemoryError = error{
 pub fn totalSystemMemory() TotalSystemMemoryError!u64 {
     switch (native_os) {
         .linux => {
-            return totalSystemMemoryLinux() catch return error.UnknownTotalSystemMemory;
+            var info: std.os.linux.sysinfo_t = undefined;
+            const result: usize = std.os.linux.sysinfo(&info);
+            if (std.os.linux.E.init(result) != .SUCCESS) {
+                return error.UnknownTotalSystemMemory;
+            }
+            return info.totalram * info.mem_unit;
         },
         .freebsd => {
             var physmem: c_ulong = undefined;

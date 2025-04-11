@@ -2611,7 +2611,7 @@ pub fn map_shadow_stack(addr: u64, size: u64, flags: u32) usize {
 }
 
 pub const Sysinfo = switch (builtin.target.abi) {
-    .gnux32 => extern struct {
+    .gnux32, .muslx32 => extern struct {
         /// Seconds since boot
         uptime: i64,
         /// 1, 5, and 15 minute load averages
